@@ -1,0 +1,26 @@
+<mat-card >
+  <mat-card-content>
+    <div  *ngIf="toggleField=='searchMode'; else toggleField=='addMode'?  showAddTemplate : ((toggleField=='editMode')? showEditTemplate : showResTemplate)">
+
+      <!--search here-->    
+     <search (toggleField)="redirectToMode($event)" >
+
+     </search>      
+    </div>
+    
+  </mat-card-content>
+</mat-card>
+<ng-template #showAddTemplate >
+  <!--add here-->
+  <add-template (toggleField)="redirectToMode($event)"></add-template>
+</ng-template>
+<ng-template #showEditTemplate >
+  <!--edit here-->
+  <edit-template (toggleValue)="redirectToMode($event)"
+  [selectedProductId]="selectedProductId"
+  ></edit-template>
+</ng-template>
+<ng-template #showResTemplate >
+  <!--result here-->
+  <result-template (toggleField)="redirectToMode($event)" (id)="productId($event)"></result-template>
+</ng-template>

@@ -1,0 +1,57 @@
+<header headTitle="Shopping" iconTitle="shopping_cart" helpTitle="Shopping"></header>
+
+<mat-card>
+
+  <mat-card-actions>
+    <form #searchForm="ngForm" >
+      <mat-form-field>
+        <input matInput  #search="ngModel" ngModel name ="search" placeholder="Filter">
+      </mat-form-field>
+      <span class="px-3"></span>
+      <span><mat-icon matTooltip="Clear" class="pointer" (click)="search.reset()" color="primary">clear</mat-icon> </span>
+      <span class="px-1"></span>
+      <span><mat-icon matTooltip="Search" class="pointer" (click)="applyFilter(search.value)" color="primary">search</mat-icon> </span>   
+    </form>  
+  </mat-card-actions>
+
+  <mat-card-content  *ngIf="toggle else showProductDetails">
+    <mat-list class="w-auto">
+      <mat-list-item class="pointer w-auto" *ngFor="let product of matchedArr" (click)="showDetails(product);toggle=!toggle">
+        <h5 mat-line>{{product.name}} 
+          <mat-icon mat-list-icon>search</mat-icon>
+        </h5>
+        <p class="label-hint" mat-line>{{product.category}} / {{product.scategory}} </p>
+      </mat-list-item>
+    </mat-list>
+    </mat-card-content> 
+    <ng-template #showProductDetails>
+      <b>{{myDocData.name}}</b>
+      <span class="spacer"></span>
+      <span matTooltip="Show All Products">
+        <mat-icon color="primary" (click)="toggle=!toggle">backspace</mat-icon>
+      </span>
+      <p class="label-go" mat-line>{{myDocData.name}} {{myDocData.lname}} </p>
+      <p class="label-hint" mat-line>{{myDocData.description}}</p>
+      <p class="label-go" mat-line>Color : {{myDocData.color}} Size : {{myDocData.size}} Price : {{myDocData.price}} </p>
+      <p class="label-error" mat-line>Shipping : {{myDocData.shipping}} Discount : {{myDocData.discount}} </p>
+      <mat-error *ngIf="savedChanges===true">
+        <br>
+        <br>Shoping cart is updated.
+        <mat-icon (click)="savedChanges=!savedChanges" color="primary">close</mat-icon>
+        <span class="spacer"></span>
+        <br>
+      </mat-error>
+      <br>
+      <span class="addRemove">
+        <mat-icon (click)="countProd('remove') " color="primary">remove</mat-icon>
+        <span class="px-2">{{ counter }}</span>
+        <mat-icon (click)="countProd('add')" color="primary">add</mat-icon>
+        <span class="px-3"></span>
+        <button [disabled]="counter <1" mat-raised-button color="primary" (click)="addToCart(myDocData, counter)">Add</button>
+      </span>   
+      
+      <br>
+      <img [src]="profileUrl | async" width="300" height="300" alt="">
+    </ng-template>
+   
+</mat-card>

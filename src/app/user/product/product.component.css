@@ -1,0 +1,9 @@
+.w-auto{
+    width: 25%
+}
+
+.addRemove{
+    display: flex;
+    justify-items:center;    
+    align-items: center;
+}

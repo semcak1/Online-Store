@@ -1,0 +1,50 @@
+<header headTitle="SignIn" iconTitle="account_circle" helpTitle="About"></header>
+
+<mat-card>
+  <div *ngIf="userLoggedIn;else showShopping">
+    <button type="button" routerLink="/product" mat-raised-button color="primary">Continue Shopping</button>   
+    <button type="button" (click)="logout();" mat-raised-button color="primary">Logout</button> 
+  </div>
+  <ng-template #showShopping>
+    <mat-card-content>
+      <form #formData="ngForm" (ngSubmit)="login('email',formData.value)" class="example-form">
+        <mat-card-actions *ngIf="error">
+          <mat-error>Login credential are not verified. {{errorMessage}}</mat-error>
+        </mat-card-actions>
+        <mat-error *ngIf="dataLoading">
+            <mat-progress-bar mode="indeterminate" color="primary" [value]="15">              
+            </mat-progress-bar>
+        </mat-error>
+        <mat-error *ngIf="brokenNetwork" class="label-error">Network Connection Error</mat-error>
+        <mat-card-actions align="start">
+          <button type="submit" [disabled]="!formData.valid" mat-raised-button color="primary">Log in</button>
+          <!-- Form Fields start from here !!!-->
+        </mat-card-actions>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="email" name="email" #email="ngModel" ngModel required email type="text">
+        </mat-form-field>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">Please enter a valid email</mat-error>
+        <mat-form-field class="example-full-width">
+          <input matInput  type="password" placeholder="App Password" name="password" #password="ngModel" ngModel required minlength="4" maxlength="30">
+        </mat-form-field>
+        <span *ngIf="password.invalid && (password.dirty || password.touched)">
+          <mat-error *ngIf="password.errors['required']">Password is required</mat-error>
+          <mat-error *ngIf="password.errors['minlength']">Password can't be less than 4 character</mat-error>
+          <mat-error *ngIf="password.errors['maxlength']">Password can't be more than 30 characters</mat-error>         
+        </span>
+      </form>
+    </mat-card-content>
+     <!-- Loggin with Google or Facebook account by Firebase -->
+    <mat-card-content>
+      <mat-chip-list class="mat-chip-list-stacked" style="margin-left:170px;">
+        <mat-chip class="m-width" color="primary" selected="true" (click)="login('FB')">
+          Login with Facebook
+        </mat-chip>
+        <mat-chip color="warn" selected="true" (click)="login('GOOGLE')">
+          Login with Google
+        </mat-chip>
+      </mat-chip-list>
+    </mat-card-content>
+  </ng-template>
+  
+</mat-card>

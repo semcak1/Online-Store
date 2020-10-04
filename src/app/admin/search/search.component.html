@@ -1,0 +1,50 @@
+<form #searchFormData="ngForm"  action="">
+  <mat-card-actions>
+    
+    <button type="button" (click)="toggle('resMode');getFilterData(searchFormData.value)" [disabled]='!searchFormData.valid' mat-raised-button color="primary">Search</button>
+   
+    <span class="px-3"></span>      
+        
+    <span matTooltip="Add New">
+      <mat-icon class="pointer" color="primary" (click)="toggle('addMode')">add </mat-icon>
+    </span>
+    <span class="px-1"></span>              
+    <span matTooltip="Show Recent Results">
+      <mat-icon class="pointer" color="primary" (click)="toggle('resMode')">cached</mat-icon>
+    </span>
+    <span class="px-1"></span>              
+    <span matTooltip="Edit">
+      <mat-icon class="pointer" color="primary" (click)="toggle('editMode')">edit</mat-icon>
+    </span>
+
+  </mat-card-actions> 
+  
+  <div class="">
+   <mat-form-field>
+      <input matInput type="text" required placeholder="Category"
+      #category="ngModel" name="category" ngModel minlength="3" maxlength="50">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput required type="text" placeholder="Product Name"
+      #name="ngModel" name="name" ngModel minlength="3" maxlength="50">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput 
+      placeholder="From Date"  name="fromDate" #fromDate="ngModel" ngModel
+      [matDatepicker]="pickerFromDate" >
+      <mat-datepicker-toggle matSuffix [for]="pickerFromDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFromDate></mat-datepicker>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput 
+      placeholder="To Date" name="toDate" #toDate="ngModel" ngModel
+      [matDatepicker]="pickertoDate" >
+      <mat-datepicker-toggle matSuffix [for]="pickertoDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickertoDate></mat-datepicker>
+    </mat-form-field>
+  </div>
+   
+  </form>
